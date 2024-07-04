@@ -9,7 +9,7 @@ For evaluation, run
 **python evaluate.py --task task --model model**
 
 Available tasks are: qa, summarization, dialogue
-Available models are: mistral7b, mistral7b-kg, llama27b, llama27b-kg, llama3, llama3-kg
+In this anonimized repository models mistral7b, mistral7b-kg are availible.
 
 2. For True-False evaluation:
 
