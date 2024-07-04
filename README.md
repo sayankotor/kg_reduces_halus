@@ -1,7 +1,7 @@
 This is a code for evaluations, which supports the work "Addressing Hallucinations in Language Models Knowledge Graph Embeddings as an Additional Modality"
 
 
-1. The evaluation on the Halu eval benchmark is based on the original repository with minor changes.
+1. The evaluation on the Halu eval benchmark is based on the original repository (https://github.com/RUCAIBox/HaluEval) with minor changes.
 For evaluation, run
 
 **cd HaluEval**
