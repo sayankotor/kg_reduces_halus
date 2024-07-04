@@ -5,19 +5,13 @@ from urllib.request import urlopen
 import torch.nn as nn
 from huggingface_hub import hf_hub_download
 
-# Loading some sources of the projection adapter and image encoder
-#hf_hub_download(repo_id="AIRI-Institute/OmniFusion", filename="models.py", local_dir='./')
+
 from models import CLIPVisionTower
 
-#hf_hub_download(repo_id="AIRI-Institute/OmniFusion", filename="models.py", local_dir='./')
 
 DEVICE = "cuda:0"
 
-#tokenizer = AutoTokenizer.from_pretrained("AIRI-Institute/OmniFusion", subfolder="OmniMistral-tokenizer", use_fast=False)
-#model = AutoModelForCausalLM.from_pretrained("AIRI-Institute/OmniFusion", subfolder="OmniMistral-model", torch_dtype=torch.bfloat16, device_map=DEVICE)
 
-#tokenizer = AutoTokenizer.from_pretrained("/home/jovyan/shares/SR004.nfs2/razzhigaev/KG/wikidata_mistral")
-#model = AutoModelForCausalLM.from_pretrained("/home/jovyan/shares/SR004.nfs2/razzhigaev/KG/wikidata_mistral", torch_dtype=torch.bfloat16, device_map=DEVICE)
 
 from huggingface_hub import login
 login(token='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')
@@ -42,16 +36,16 @@ model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-v0.1", torch_
 
 #hf_hub_download(repo_id="AIRI-Institute/OmniFusion", filename="projection", local_dir='./')
 #hf_hub_download(repo_id="AIRI-Institute/OmniFusion", filename="special_embeddings.pt", local_dir='./')
-projection = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/projection_qa", map_location=DEVICE)
-start_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/SOI2_qa.pt", map_location=DEVICE)
-end_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/EOI2_qa.pt", map_location=DEVICE)
+projection = torch.load("/ckpts/projection_qa", map_location=DEVICE)
+start_emb = torch.load("/ckpts/SOI2_qa.pt", map_location=DEVICE)
+end_emb = torch.load("/ckpts/EOI2_qa.pt", map_location=DEVICE)
 
 # Load embedding encoder
 
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 
-model_path = "/home/jovyan/shares/SR004.nfs2/razzhigaev/KG/graphRoberta_v1"
-projector_path = "/home/jovyan/shares/SR004.nfs2/razzhigaev/KG/projector_v1"
+model_path = "/KG/graphRoberta_v1"
+projector_path = "/KG/projector_v1"
 
 
 tokenizer_emb = AutoTokenizer.from_pretrained(model_path)

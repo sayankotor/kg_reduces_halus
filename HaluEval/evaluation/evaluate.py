@@ -12,14 +12,6 @@ logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
 
 # Load entities embeddings for QA
 
-import pickle
-with open('/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/column_with_embs.pkl', 'rb') as f:
-    column_with_embs = pickle.load(f)
-
-with open('/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/column_with_entss.pkl', 'rb') as f:
-    column_with_entites = pickle.load(f)
-
-
 
 openai.api_key = 'sk-'
 
