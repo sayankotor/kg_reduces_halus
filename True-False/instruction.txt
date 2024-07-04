@@ -1,0 +1,27 @@
+I want you act as an statement judge. Given a statement, your objective is to determine if the provided statement correct or not. Write "True" if the given statement is true and "False" if given statement is false. The answer you give MUST be \"True\" or \"False\". 
+For example: 
+#Statement#: Marlon Brando refused to be in any films in 1972.
+#Your Judgement#: "False"
+
+#Statement#: Dracula is a written work.
+#Your Judgement#: "True"
+
+#Statement#: Maria Sharapova passed all drug tests at the 2016 Australian Open.
+#Your Judgement#: "False"
+
+#Statement#: Blood are red.
+#Your Judgement#: "True"
+
+#Statement#: David Cronenberg has a cameo in To Die For.
+#Your Judgement#: "True"
+
+#Statement#: Albert Einstein was born in Moscow.
+#Your Judgement#: "False"
+
+#Statement#: Cubango is a city in Australia.
+#Your Judgement#: "False"
+
+#Statement#: The Okavango River is a river in southwest Africa.
+#Your Judgement#: "True"
+
+
