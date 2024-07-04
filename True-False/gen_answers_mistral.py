@@ -12,21 +12,21 @@ from huggingface_hub import hf_hub_download
 
 DEVICE = "cuda:0"
 
-tokenizer = AutoTokenizer.from_pretrained("/home/jovyan/shares/SR004.nfs2/razzhigaev/KG/wikidata_mistral")
-model = AutoModelForCausalLM.from_pretrained("/home/jovyan/shares/SR004.nfs2/razzhigaev/KG/wikidata_mistral", torch_dtype=torch.bfloat16, device_map=DEVICE)
+tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-v0.1")
+model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-v0.1", torch_dtype=torch.bfloat16, device_map=DEVICE)
 #model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-v0.1", torch_dtype=torch.bfloat16, device_map=DEVICE)
 
 
-projection = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/projection2", map_location=DEVICE)
-start_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/SOI2.pt", map_location=DEVICE)
-end_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/EOI2.pt", map_location=DEVICE)
+projection = torch.load("/ckpts/projection2", map_location=DEVICE)
+start_emb = torch.load("/ckpts/SOI2.pt", map_location=DEVICE)
+end_emb = torch.load("/ckpts/EOI2.pt", map_location=DEVICE)
 
 # Load embedding encoder
 
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 
-model_path = "/home/jovyan/shares/SR004.nfs2/razzhigaev/KG/graphRoberta_v1"
-projector_path = "/home/jovyan/shares/SR004.nfs2/razzhigaev/KG/projector_v1"
+model_path = "/ckpts/graphRoberta_v1"
+projector_path = "/ckpts/projector_v1"
 
 
 tokenizer_emb = AutoTokenizer.from_pretrained(model_path)

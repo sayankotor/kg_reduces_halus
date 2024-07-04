@@ -16,20 +16,17 @@ tokenizer = AutoTokenizer.from_pretrained("NousResearch/Llama-2-7b-chat-hf", tor
 
 model.eval()
 
-projection = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/projection_llama2_chat", map_location=DEVICE)
-start_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/SOI_llama2_chat.pt", map_location=DEVICE)
-end_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/EOI_llama2_chat.pt", map_location=DEVICE)
+projection = torch.load("/ckpts/projection_llama2_chat", map_location=DEVICE)
+start_emb = torch.load("/ckpts/SOI_llama2_chat.pt", map_location=DEVICE)
+end_emb = torch.load("/ckpts/EOI_llama2_chat.pt", map_location=DEVICE)
 
-#projection = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/projection_llama2", map_location=DEVICE)
-#start_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/SOI_llama2.pt", map_location=DEVICE)
-#end_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/EOI_llama2.pt", map_location=DEVICE)
 
 # Load embedding encoder
 
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 
-model_path = "/home/jovyan/shares/SR004.nfs2/razzhigaev/KG/graphRoberta_v1"
-projector_path = "/home/jovyan/shares/SR004.nfs2/razzhigaev/KG/projector_v1"
+model_path = "/KG/graphRoberta_v1"
+projector_path = "/KG/projector_v1"
 
 
 tokenizer_emb = AutoTokenizer.from_pretrained(model_path)
