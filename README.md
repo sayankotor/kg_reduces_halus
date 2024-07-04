@@ -5,6 +5,7 @@ This is a code for evaluations, which supports the work "Addressing Hallucinatio
 For evaluation, run
 
 **cd HaluEval**
+
 **python evaluate.py --task task --model model**
 
 Available tasks are: qa, summarization, dialogue
@@ -13,6 +14,7 @@ Available models are: mistral7b, mistral7b-kg, llama27b, llama27b-kg, llama3, ll
 2. For True-False evaluation:
 
 **cd True-False**
-**python evaluate.py --model model --kg **
+
+**python evaluate.py --model model --kg**
 
 3. In the folder 'dataset_example' there is a part of the dataset described in the paper.
