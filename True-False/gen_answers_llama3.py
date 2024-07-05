@@ -16,14 +16,14 @@ model.eval()
 
 projection = torch.load("/ckpts/projection_llama3_qa1", map_location=DEVICE)
 start_emb = torch.load("/ckpts/SOI2_llama3_qa1.pt", map_location=DEVICE)
-end_emb = torch.load("/EOI2_llama3_qa1.pt", map_location=DEVICE)
+end_emb = torch.load("/ckpts/EOI2_llama3_qa1.pt", map_location=DEVICE)
 
 # Load embedding encoder
 
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 
-model_path = "/KG/graphRoberta_v1"
-projector_path = "/KG/projector_v1"
+model_path = "/ckpts/graphRoberta_v1"
+projector_path = "/ckpts/projector_v1"
 
 
 tokenizer_emb = AutoTokenizer.from_pretrained(model_path)

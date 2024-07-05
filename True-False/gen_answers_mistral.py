@@ -1,8 +1,5 @@
 DEVICE = "cuda:0"
 
-#tokenizer = AutoTokenizer.from_pretrained("AIRI-Institute/OmniFusion", subfolder="OmniMistral-tokenizer", use_fast=False)
-#model = AutoModelForCausalLM.from_pretrained("AIRI-Institute/OmniFusion", subfolder="OmniMistral-model", torch_dtype=torch.bfloat16, device_map=DEVICE)
-
 import torch
 from PIL import Image
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -14,7 +11,6 @@ DEVICE = "cuda:0"
 
 tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-v0.1")
 model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-v0.1", torch_dtype=torch.bfloat16, device_map=DEVICE)
-#model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-v0.1", torch_dtype=torch.bfloat16, device_map=DEVICE)
 
 
 projection = torch.load("/ckpts/projection2", map_location=DEVICE)

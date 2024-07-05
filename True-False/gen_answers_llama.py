@@ -25,8 +25,8 @@ end_emb = torch.load("/ckpts/EOI_llama2_chat.pt", map_location=DEVICE)
 
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 
-model_path = "/KG/graphRoberta_v1"
-projector_path = "/KG/projector_v1"
+model_path = "/ckpts/graphRoberta_v1"
+projector_path = "/ckpts/projector_v1"
 
 
 tokenizer_emb = AutoTokenizer.from_pretrained(model_path)
