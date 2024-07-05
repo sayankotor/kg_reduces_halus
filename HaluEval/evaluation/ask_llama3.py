@@ -7,22 +7,14 @@ import torch.nn as nn
 from huggingface_hub import hf_hub_download
 
 
-# Loading some sources of the projection adapter and image encoder
-#hf_hub_download(repo_id="mistralai/Mistral-7B-v0.1", filename="models.py", local_dir='./')
 
 DEVICE = "cuda:0"
 PROMPT = "This is a dialog with AI assistant.\n"
 
-#model = AutoModelForCausalLM.from_pretrained("huggyllama/llama-7b",torch_dtype=torch.bfloat16, device_map=DEVICE)
-#tokenizer = AutoTokenizer.from_pretrained("huggyllama/llama-7b")
+
 model = AutoModelForCausalLM.from_pretrained("unsloth/llama-3-8b-Instruct",torch_dtype=torch.bfloat16, device_map=DEVICE)
 tokenizer = AutoTokenizer.from_pretrained("unsloth/llama-3-8b-Instruct")
 model.eval()
-#hf_hub_download(repo_id="AIRI-Institute/OmniFusion", filename="projection", local_dir='./')
-#hf_hub_download(repo_id="AIRI-Institute/OmniFusion", filename="special_embeddings.pt", local_dir='./')
-#projection = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/projection_llama_qa1", map_location=DEVICE)
-#start_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/SOI2_llama_qa1.pt", map_location=DEVICE)
-#end_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/check_halu/ckpts/EOI2_llama_qa1.pt", map_location=DEVICE)
 
 projection = torch.load("/ckpts/projection_llama3_qa1", map_location=DEVICE)
 start_emb = torch.load("/ckpts/SOI2_llama3_qa1.pt", map_location=DEVICE)

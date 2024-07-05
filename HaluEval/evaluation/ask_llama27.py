@@ -7,15 +7,10 @@ import torch.nn as nn
 from huggingface_hub import hf_hub_download
 
 
-# Loading some sources of the projection adapter and image encoder
-#hf_hub_download(repo_id="mistralai/Mistral-7B-v0.1", filename="models.py", local_dir='./')
-from models import CLIPVisionTower
-
 DEVICE = "cuda:0"
 PROMPT = "This is a dialog with AI assistant.\n"
 
-#model = AutoModelForCausalLM.from_pretrained("huggyllama/llama-7b",torch_dtype=torch.bfloat16, device_map=DEVICE)
-#tokenizer = AutoTokenizer.from_pretrained("huggyllama/llama-7b")
+
 model = AutoModelForCausalLM.from_pretrained("NousResearch/Llama-2-7b-chat-hf", torch_dtype=torch.bfloat16, device_map=DEVICE)
 tokenizer = AutoTokenizer.from_pretrained("NousResearch/Llama-2-7b-chat-hf", torch_dtype=torch.bfloat16, device_map=DEVICE)
 model.eval()

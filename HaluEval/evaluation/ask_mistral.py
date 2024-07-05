@@ -6,9 +6,6 @@ import torch.nn as nn
 from huggingface_hub import hf_hub_download
 
 
-from models import CLIPVisionTower
-
-
 DEVICE = "cuda:0"
 
 
@@ -23,9 +20,6 @@ from urllib.request import urlopen
 import torch.nn as nn
 from huggingface_hub import hf_hub_download
 
-# Loading some sources of the projection adapter and image encoder
-#hf_hub_download(repo_id="mistralai/Mistral-7B-v0.1", filename="models.py", local_dir='./')
-from models import CLIPVisionTower
 
 DEVICE = "cuda:0"
 PROMPT = "This is a dialog with AI assistant.\n"
@@ -33,19 +27,23 @@ PROMPT = "This is a dialog with AI assistant.\n"
 tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-v0.1", use_fast=False)
 model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-v0.1", torch_dtype=torch.bfloat16, device_map=DEVICE)
 
+import os
 
-#hf_hub_download(repo_id="AIRI-Institute/OmniFusion", filename="projection", local_dir='./')
-#hf_hub_download(repo_id="AIRI-Institute/OmniFusion", filename="special_embeddings.pt", local_dir='./')
-projection = torch.load("/ckpts/projection_qa", map_location=DEVICE)
-start_emb = torch.load("/ckpts/SOI2_qa.pt", map_location=DEVICE)
-end_emb = torch.load("/ckpts/EOI2_qa.pt", map_location=DEVICE)
+
+path = os.getcwd()
+path_parent = os.path.abspath(os.path.join(path, os.pardir))
+path_root = os.path.dirname(path_parent)
+
+projection = torch.load(path_root + "/chkpts/projection_qa", map_location=DEVICE)
+start_emb = torch.load(path_root+ "/chkpts/SOI2_qa.pt", map_location=DEVICE)
+end_emb = torch.load(path_root+ "/chkpts/EOI2_qa.pt", map_location=DEVICE)
 
 # Load embedding encoder
 
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 
-model_path = "/KG/graphRoberta_v1"
-projector_path = "/KG/projector_v1"
+model_path = path_root+"/chkpts/graphRoberta_v1"
+projector_path = path_root+"/chkpts/projector_v1"
 
 
 tokenizer_emb = AutoTokenizer.from_pretrained(model_path)

@@ -311,9 +311,6 @@ def evaluation_qa_dataset(model, file, instruction, output_path):
             question = data[i]["question"]
             hallucinated_answer = data[i]["hallucinated_answer"]
             right_answer = data[i]["right_answer"]
-            embs = column_with_embs[i]
-            ents = column_with_entites[i]
-
             if random.random() > 0.5:
                 answer = hallucinated_answer
                 ground_truth = "Yes"
@@ -324,10 +321,6 @@ def evaluation_qa_dataset(model, file, instruction, output_path):
             if (model in ['mistral7b', 'mistral7b-kg', 'llama27b', 'llama27b-kg', 'llama3', 'llama3-kg']):
                 print ("evaluation_prvate", flush = True)
                 ans = get_qa_response_private(model, question, answer, instruction)
-            elif (model in ['mistral7b-kg-noencoder', 'llama-kg-noencoder']):
-                print ("evaluation_qa_dataset", flush = True)
-                embs = [emb for emb in embs if emb != -111]
-                ans = get_qa_response_kg(model, question, answer, instruction, embs)
             else:
                 ans = get_qa_response(model, question, answer, instruction)
             print ("\n answ", ans)
