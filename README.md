@@ -1,3 +1,10 @@
+0. For load Mistral-7B checkpoints:
+
+**cd kg_reduces_halu**
+**wget 'https://www.dropbox.com/scl/fi/yk35riqrumf90n3po5azz/chkpts1.tar.gz?rlkey=duylp86l0kju23xggr7zb2cu5&st=3826jrv9&dl=1' -O chkpts.tar.gz**
+**tar -xvzf chkpts.tar.gz**
+
+
 This is a code for evaluations, which supports the work "Addressing Hallucinations in Language Models Knowledge Graph Embeddings as an Additional Modality"
 
 
