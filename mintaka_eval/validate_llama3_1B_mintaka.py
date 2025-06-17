@@ -1,19 +1,19 @@
 import os
-import json
 import torch
 import collections
+import re
 from typing import Union, List
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from datasets import load_dataset
 from tqdm import tqdm
-import re
 
-DEVICE = "cuda:2"
+DEVICE = "cuda:1"
+
 # 1. Load the Mintaka dataset
 dataset = load_dataset("AmazonScience/mintaka", split="test", name="en")
 
-# 2. Load the model and tokenizer (no accelerate issues)
-model_id = "unsloth/llama-2-7b"  # or "meta-llama/Llama-2-7b-chat-hf"
+# 2. Load the model and tokenizer for Llama 3.2 1B
+model_id = "unsloth/llama-3.2-1b"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 model = AutoModelForCausalLM.from_pretrained(
     model_id,
@@ -22,7 +22,33 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 model.eval()
 
-# 3. Evaluation metric
+#new_eos_token = "<|eos|>"
+
+# Set it and add to tokenizer
+#tokenizer.eos_token = new_eos_token
+#tokenizer.add_special_tokens({'eos_token': new_eos_token})
+
+# Check ID
+print("New EOS token ID:", tokenizer.eos_token_id)
+
+special_tokens = {
+    "bos_token": tokenizer.bos_token,
+    "eos_token": tokenizer.eos_token,
+    "pad_token": tokenizer.pad_token,
+    "unk_token": tokenizer.unk_token,
+    "additional_special_tokens": tokenizer.additional_special_tokens,
+}
+
+special_token_ids = {
+    name: tokenizer.convert_tokens_to_ids(token)
+    for name, token in special_tokens.items()
+    if isinstance(token, str) or token is not None
+}
+
+print("Special tokens:", special_tokens)
+print("Token IDs:", special_token_ids)
+
+# 3. Define helper functions
 def normalize_and_tokenize_text(text):
     text = re.sub(r"[^\w\s]", "", text)
     return text.strip().lower().split()
@@ -54,7 +80,6 @@ def calculate_f1(pred: Union[str, List], answer: Union[str, List], mode: str) ->
     return f1
 
 # 4. Inference loop
-predictions = {}
 em_scores = []
 f1_scores = []
 
@@ -62,49 +87,27 @@ for example in tqdm(dataset):
     question = example["question"]
     reference = example["answerText"] if isinstance(example["answerText"], str) else example["answerText"][0]
 
-    #prompt = f"You are a helpful assistant. Answer the following question briefly and clearly. Do not repeat or provide additional information except the answer. Do NOT provide an explanation. Only provide the answer.\n\n{question}\n\nAnswer:"
-
+    # Format using chat template
     prompt = f"You are a knowledgeable assistant. Answer the question with a short, simple response. Avoid explanations.\n\n{question}\n\nAnswer:"
 
-    #inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-    #input_ids = inputs["input_ids"]
-    #with torch.no_grad():
-    #    inputs_embeds = model.model.embed_tokens(input_ids)
-    #embeddings = inputs_embeds.to(dtype=torch.float16, device=DEVICE)
-        
-    #outputs = model.generate(inputs_embeds=embeddings, max_new_tokens = 20)
-    #generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
-
-    # Tokenize prompt
-    inputs = tokenizer(prompt, return_tensors="pt")
-    input_ids = inputs["input_ids"].to(model.device)
-    attention_mask = inputs["attention_mask"].to(model.device)
-
-    # Get input embeddings
+    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+    input_ids = inputs["input_ids"]
     with torch.no_grad():
         inputs_embeds = model.model.embed_tokens(input_ids)
 
-    # Generate continuation
-    outputs = model.generate(
-        inputs_embeds=inputs_embeds,
-        attention_mask=attention_mask,
-        max_new_tokens=20,
-        pad_token_id=tokenizer.pad_token_id,
-        eos_token_id=tokenizer.eos_token_id,
-    )
+    outputs = model.generate(inputs_embeds=inputs_embeds, max_new_tokens=20)
+    generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    generated_answer = generated_text.strip()
 
-    generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
+    print("\n\n\n")
+    print("question", question)
+    print("reference", reference)
+    print("generated_answer", generated_answer)
 
-    # Extract answer
-    #generated_answer = generated_text.strip()
-    print ("\n\n\n")
-    print ("question", question)
-    print ("reference", reference)
-    print ("generated_answer", generated_text)
+    em_scores.append(calculate_em(generated_answer, reference, mode="text"))
+    f1_scores.append(calculate_f1(generated_answer, reference, mode="text"))
+    print("em_scores,f1_scores", em_scores[-1], f1_scores[-1])
 
-    em_scores.append(calculate_em(generated_text, reference, mode="text"))
-    f1_scores.append(calculate_f1(generated_text, reference, mode="text"))
-    print ("em_scores,f1_scores", em_scores[len(em_scores)-1],f1_scores[len(em_scores)-1])
-
+# Final scores
 print(f"Exact Match (EM): {100 * sum(em_scores) / len(em_scores):.2f}%")
 print(f"F1 Score: {100 * sum(f1_scores) / len(f1_scores):.2f}%")
