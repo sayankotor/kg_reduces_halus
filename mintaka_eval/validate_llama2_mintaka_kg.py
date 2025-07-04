@@ -22,9 +22,9 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 model.eval()
             
-projection = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/kg_reduces_halus/notebook_new/ckpts/projection_llama2_renorm", map_location=DEVICE)
-start_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/kg_reduces_halus/notebook_new/ckpts/SOI_llama2_renorm.pt", map_location=DEVICE)
-end_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/kg_reduces_halus/notebook_new/ckpts/EOI_llama2_renorm.pt", map_location=DEVICE)
+projection = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/kg_reduces_halus/notebook_new/ckpts/projection_llama2", map_location=DEVICE)
+start_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/kg_reduces_halus/notebook_new/ckpts/SOI_llama2.pt", map_location=DEVICE)
+end_emb = torch.load("/home/jovyan/shares/SR004.nfs2/chekalina/kg_reduces_halus/notebook_new/ckpts/EOI_llama2.pt", map_location=DEVICE)
 
 print("loads", flush = True)
 

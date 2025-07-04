@@ -140,8 +140,8 @@ for example in tqdm(dataset):
 
     em_scores.append(calculate_em(generated_answer, reference, mode="text"))
     f1_scores.append(calculate_f1(generated_answer, reference, mode="text"))
-    print(f"Exact Match (EM): {100 * sum(em_scores) / len(em_scores):.2f}%")
+    
     print ("em_scores,f1_scores", em_scores[len(em_scores)-1],f1_scores[len(em_scores)-1])
 
-
+print(f"Exact Match (EM): {100 * sum(em_scores) / len(em_scores):.2f}%")
 print(f"F1 Score: {100 * sum(f1_scores) / len(f1_scores):.2f}%")
