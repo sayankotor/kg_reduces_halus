@@ -1,6 +1,8 @@
 # 🌟 Code for "Addressing Hallucinations in Language Models: Knowledge Graph Embeddings as an Additional Modality"
 
-This repository contains the evaluation code and setup instructions to reproduce the experiments described in our paper.
+This repository contains the evaluation code and setup instructions to reproduce the experiments described in our paper:
+
+> **Addressing Hallucinations in Language Models with Knowledge Graph Embeddings as an Additional Modality** > *Viktoriia Chekalina, Anton Razzhigaev, Elizaveta Goncharova, and Andrey Kuznetsov* > [**[arXiv:2411.11531]**](https://arxiv.org/abs/2411.11531)
 
 ---
 
